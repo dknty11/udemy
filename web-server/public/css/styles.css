@@ -1,0 +1,45 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0 auto;
+    max-width: 450px;
+    padding: 0 15px;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex-grow: 1;
+}
+
+footer {
+    color: rgb(103, 117, 117);
+    border-top: 1px solid gainsboro;
+    margin-top: 20px;
+    padding: 16px 0;
+}
+
+header {
+    margin-top: 15px;
+    margin-bottom: 48px;
+}
+
+header a {
+    color: gainsboro;
+    margin-right: 16px;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 64px;
+    margin-bottom: 16px
+}
+
+h2 {
+    color: greenyellow;
+}
+
+img {
+    width: 250px;
+}
