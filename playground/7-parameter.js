@@ -1,4 +1,4 @@
-const greeter = (name = 'user') => {
+const greeter = (name = 'user', age) => {
     console.log('Hello ' + name)
 }
 
