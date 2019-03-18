@@ -1,7 +1,7 @@
 const weatherForm = document.querySelector('form')
 const search = document.querySelector('input')
-const messageOne = document.getElementById('#ms1')
-const messageSecond = document.getElementById('#ms2')
+const messageOne = document.getElementById('ms1')
+const messageSecond = document.getElementById('ms2')
 
 // Get value from api
 const getvalue = (location) => fetch('/weather?address='+location).then((res) => {
