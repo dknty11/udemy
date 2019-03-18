@@ -11,8 +11,8 @@ const getvalue = (location) => fetch('/weather?address='+location).then((res) =>
         } else {
             // console.log(data.location)
             // console.log(data.forecast)
-            messageOne.textContent = 'This is ' + data.location
-            messageSecond.textContent = 'And the weather is ' + data.forecast
+            messageOne.textContent = data.location
+            messageSecond.textContent = data.forecast
         }
     })
 })
