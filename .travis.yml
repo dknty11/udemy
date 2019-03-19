@@ -1,0 +1,3 @@
+script:
+  - cd web-server
+  - node src/app.js
