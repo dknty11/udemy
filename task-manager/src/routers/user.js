@@ -3,6 +3,7 @@ const mutler = require('multer')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const sharp = require('sharp')
+const { sendWelcomeEmail } = require('../emails/account')
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
@@ -10,6 +11,7 @@ router.post('/users', async (req, res) => {
 
     try {
         await user.save()
+        sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch (e) {
@@ -105,7 +107,7 @@ const upload = mutler({
     },
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|png)/)) {
-            return cb(new Error('Wrong format'))
+            return cb(new Error('Wrong format!'))
         }
 
         cb(undefined, true)
@@ -113,29 +115,28 @@ const upload = mutler({
 })
 
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
-    // req.user.avatar = req.file.buffer
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     req.user.avatar = buffer
     await req.user.save()
     res.send()
 }, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
+    res.status(400).send({error: error.message})
 })
 
 router.delete('/users/me/avatar', auth, async (req, res) => {
-    req.file.buffer = undefined
+    req.user.avatar = undefined
     await req.user.save()
     res.send()
 }, (error, req, res, next) => {
-    res.status(404).send({ error: 'Could not find the avatar' })
+    res.status(404).send({ error: error.message })
 })
 
-router.get('/users/:id/avatar', auth, async (req, res) => {
+router.get('/users/:id/avatar', async (req, res) => {
     try {
-        const user = await User.findById(req.user.id)
+        const user = await User.findById(req.params.id)
 
         if (!user || !user.avatar) {
-            throw new Error()
+            throw new Error('Avatar not found')
         }
 
         res.set('Content-Type', 'image/png')
