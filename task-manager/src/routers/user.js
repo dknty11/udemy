@@ -2,6 +2,7 @@ const express = require('express')
 const mutler = require('multer')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
+const sharp = require('sharp')
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
@@ -99,7 +100,6 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 const upload = mutler({
-    dest: 'avatar',
     limits: {
         fileSize: 200000
     },
@@ -112,8 +112,37 @@ const upload = mutler({
     }
 })
 
-router.post('/users/me/avatar', upload.single('avatar'), async (req, res) => {
+router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
+    // req.user.avatar = req.file.buffer
+    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+    req.user.avatar = buffer
+    await req.user.save()
     res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+})
+
+router.delete('/users/me/avatar', auth, async (req, res) => {
+    req.file.buffer = undefined
+    await req.user.save()
+    res.send()
+}, (error, req, res, next) => {
+    res.status(404).send({ error: 'Could not find the avatar' })
+})
+
+router.get('/users/:id/avatar', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id)
+
+        if (!user || !user.avatar) {
+            throw new Error()
+        }
+
+        res.set('Content-Type', 'image/png')
+        res.send(user.avatar)
+    } catch (e) {
+        res.status(404).send(e)
+    }
 })
 
 module.exports = router
