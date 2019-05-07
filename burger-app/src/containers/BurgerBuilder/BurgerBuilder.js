@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Aux from '../../hoc/Aux'
+import Aux from '../../hoc/Aux/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
@@ -30,7 +30,6 @@ class BurgerBuilder extends Component {
   }
 
   updatePurchaseState(ingredients) {
-    console.log(ingredients)
     const sum = Object.keys(ingredients)
       .map((igKey) => {
         return ingredients[igKey]

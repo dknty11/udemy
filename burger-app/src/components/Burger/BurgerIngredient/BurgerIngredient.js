@@ -30,6 +30,8 @@ class BurgerIngredient extends Component {
       case ('salad'):
         ingredient = <div className="Salad"></div>;
         break;
+      default:
+        break;
     }
     return ingredient;
   }
