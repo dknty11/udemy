@@ -24,8 +24,7 @@ class Layout extends Component {
   render () {
     return (
       <Aux>
-        <Toolbar 
-          clicked={this.sideDrawerOpenHandler} />
+        <Toolbar clicked={this.sideDrawerOpenHandler} />
         <SideDrawer
           isOpened={this.state.showSideDrawer}
           closed={this.sideDrawerCloseHandler} />
