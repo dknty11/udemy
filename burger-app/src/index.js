@@ -1,15 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import ingredientReducer from './store/reducer/ingredients'
+import priceReducer from './store/reducer/price'
 
-import { BrowserRouter } from 'react-router-dom';
+const rootReducer = combineReducers({
+  globalIngredients: ingredientReducer,
+  globalTotalPrice: priceReducer
+})
+
+const store = createStore(rootReducer);
 
 const app = (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
 
 ReactDOM.render( app, document.getElementById('root'));
