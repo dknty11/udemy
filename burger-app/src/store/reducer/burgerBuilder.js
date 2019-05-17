@@ -36,15 +36,10 @@ const ingredientReducer = (state = initialState, action) => {
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
       }
       case actionTypes.SET_INGREDIENT:
+        console.log(action.ingredients)
         return {
           ...state,
-          ingredients: {
-            salad: action.ingredients.salad,
-            bacon: action.ingredients.bacon,
-            cheese: action.ingredients.cheese,
-            meat: action.ingredients.meat
-          },
-          error: false
+          ingredients: action.ingredients
         }
       case actionTypes.FETCH_INGREDIENTS_ERROR:
         console.log('Failed fetching')

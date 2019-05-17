@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../../components/UI/Button/Button'
 import Spinner from '../../../components/UI/Spinner/Spinner'
@@ -83,20 +84,10 @@ class ContactData extends Component {
       formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
     }
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData
     }
-    axios.post('/orders.json', order).then((res) => {
-      console.log('[Burger Builder] Response Data:\n')
-      console.log(res)
-      this.setState({ loading: false })
-      this.props.history.push('/')
-    }).catch((err) => {
-      console.log('[Burger Builder] Error:\n')
-      console.log(err)
-      this.setState({ loading: false })
-    })
   }
 
   render () {
@@ -134,4 +125,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+    ings: state.globalIngredients.ingredients,
+    price: state.globalIngredients.totalPrice
+  }
+}
+
+export default connect(mapStateToProps)(ContactData);
