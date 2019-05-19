@@ -39,7 +39,7 @@ const ingredientReducer = (state = initialState, action) => {
         console.log(action.ingredients)
         return {
           ...state,
-          ingredients: action.ingredients
+          ingredients: action.ingredients,
         }
       case actionTypes.FETCH_INGREDIENTS_ERROR:
         console.log('Failed fetching')
