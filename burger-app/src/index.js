@@ -14,8 +14,8 @@ import priceReducer from './store/reducer/price'
 
 const rootReducer = combineReducers({
   globalIngredients: ingredientReducer,
-  orders: ordersReducer,
-  price: priceReducer
+  price: priceReducer,
+  orders: ordersReducer
 })
 
 const logger = store => {

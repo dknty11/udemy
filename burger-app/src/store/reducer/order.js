@@ -34,6 +34,11 @@ const ordersReducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             }
+        case actionTypes.FETCH_ALL_ORDERS:
+            return {
+                ...state,
+                orders: action.orders
+            }
         default: return state
     }
 }

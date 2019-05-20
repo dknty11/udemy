@@ -22,6 +22,33 @@ export const purchaseBurgerStart = () => {
   }
 }
 
+export const fetchOrders = (orders) => {
+  return {
+    type: actionTypes.FETCH_ALL_ORDERS,
+    orders
+  }
+}
+
+export const fetchAllOrders = () => {
+  return dispatch => {
+    axios.get('/orders.json')
+      .then(res => {
+        const fetchedOrders = [];
+        for (let key in res.data) {
+          fetchedOrders.push({
+            ...res.data[key],
+            id: key
+          })
+        }
+        dispatch(fetchOrders(fetchedOrders))
+      })
+      .catch(err => {
+        console.log('[Orders.js] [Action]')
+        console.log(err)
+      })
+  }
+}
+
 export const purchaseBurger = (orderData) => {
   return dispatch => {
     dispatch(purchaseBurgerStart());
