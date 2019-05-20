@@ -8,12 +8,14 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import ingredientReducer from './store/reducer/ingredients';
+import ingredientReducer from './store/reducer/burgerBuilder';
 import ordersReducer from './store/reducer/order'
+import priceReducer from './store/reducer/price'
 
 const rootReducer = combineReducers({
   globalIngredients: ingredientReducer,
-  orders: ordersReducer
+  orders: ordersReducer,
+  price: priceReducer
 })
 
 const logger = store => {

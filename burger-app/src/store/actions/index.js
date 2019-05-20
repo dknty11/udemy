@@ -4,5 +4,11 @@ export {
   fetchIngredient
 } from './burgerBuilder';
 export {
-  purchaseBurger
+  purchaseBurger,
+  purchaseInit
 } from './order'
+export {
+  setTotalPrice,
+  increaseTotalPrice,
+  decreaseTotalPrice
+} from './price';
