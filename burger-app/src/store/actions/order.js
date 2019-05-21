@@ -1,6 +1,26 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
+export const purchaseBurger = (orderData) => {
+  return dispatch => {
+    dispatch(purchaseBurgerStart());
+    axios.post('/orders.json', orderData).then((res) => {
+      console.log(res.data)
+      dispatch(purchaseBurgerSuccess(res.data.name, orderData))
+    }).catch((err) => {
+      console.log('[Burger Builder] Error:\n')
+      console.log(err)
+      dispatch(purchaseBurgerFail(err))
+    })
+  }
+}
+
+export const purchaseInit = () => {
+  return {
+    type: actionTypes.PURCHASE_INIT
+  }
+}
+
 export const purchaseBurgerSuccess = (id, orderData) => {
   return {
     type: actionTypes.PURCHASE_BURGER_SUCCESS,
@@ -23,14 +43,8 @@ export const purchaseBurgerStart = () => {
 }
 
 export const fetchOrders = (orders) => {
-  return {
-    type: actionTypes.FETCH_ALL_ORDERS,
-    orders
-  }
-}
-
-export const fetchAllOrders = () => {
   return dispatch => {
+    dispatch(fetchOrderStart())
     axios.get('/orders.json')
       .then(res => {
         const fetchedOrders = [];
@@ -40,31 +54,30 @@ export const fetchAllOrders = () => {
             id: key
           })
         }
-        dispatch(fetchOrders(fetchedOrders))
+        dispatch(fetchOrderSuccess(fetchedOrders))
       })
       .catch(err => {
-        console.log('[Orders.js] [Action]')
-        console.log(err)
+        dispatch(fetchOrderFail(err))
       })
   }
 }
 
-export const purchaseBurger = (orderData) => {
-  return dispatch => {
-    dispatch(purchaseBurgerStart());
-    axios.post('/orders.json', orderData).then((res) => {
-      console.log(res.data)
-      dispatch(purchaseBurgerSuccess(res.data.name, orderData))
-    }).catch((err) => {
-      console.log('[Burger Builder] Error:\n')
-      console.log(err)
-      dispatch(purchaseBurgerFail(err))
-    })
+export const fetchOrderStart = () => {
+  return {
+    type: actionTypes.FETCH_ORDER_START
   }
 }
 
-export const purchaseInit = () => {
+export const fetchOrderSuccess = (orders) => {
   return {
-    type: actionTypes.PURCHASE_INIT
+    type: actionTypes.FETCH_ORDER_SUCCESS,
+    orders
+  }
+}
+
+export const fetchOrderFail = (error) => {
+  return {
+    type: actionTypes.FETCH_ORDER_FAIL,
+    error
   }
 }

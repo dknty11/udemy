@@ -6,7 +6,7 @@ export {
 export {
   purchaseBurger,
   purchaseInit,
-  fetchAllOrders
+  fetchOrders
 } from './order'
 export {
   setTotalPrice,
