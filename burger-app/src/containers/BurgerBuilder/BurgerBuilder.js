@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Aux from '../../hoc/Aux/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
@@ -7,14 +9,9 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import { connect } from 'react-redux';
 import * as burgerBuilderAction from '../../store/actions/index'
 
 class BurgerBuilder extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {}
-  // }
   state = {
     purchasing: false,
     loading: false
@@ -24,7 +21,7 @@ class BurgerBuilder extends Component {
     this.props.onInitIngredients()
   }
 
-  addIngredientHandler = (type) => {
+  // addIngredientHandler = (type) => {
     // const oldCount = this.state.ingredients[type];
     // const updatedCount = oldCount + 1;
     // const updatedIngredients = {
@@ -39,7 +36,7 @@ class BurgerBuilder extends Component {
     //   ingredients: updatedIngredients
     // })
     // this.updatePurchaseState(updatedIngredients)
-  }
+  // }
 
   // removeIngredientHandler = (type) => {
   //   const oldCount = this.state.ingredients[type];

@@ -13,3 +13,9 @@ export {
   increaseTotalPrice,
   decreaseTotalPrice
 } from './price';
+export {
+  fetchSingleOrder
+} from './orderDetail';
+export {
+  deleteOrder
+} from './deleteOrder';

@@ -19,7 +19,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your Name'
         },
-        value: ''
+        value: this.props.contactData ? this.props.contactData.name : ''
       },
       email: {
         elementType: 'input',
@@ -27,7 +27,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your Email'
         },
-        value: ''
+        value: this.props.contactData ? this.props.contactData.email : ''
       },
       street: {
         elementType: 'input',
@@ -35,7 +35,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Street'
         },
-        value: ''
+        value: this.props.contactData ? this.props.contactData.street : ''
       },
       country: {
         elementType: 'input',
@@ -43,7 +43,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Country'
         },
-        value: ''
+        value: this.props.contactData ? this.props.contactData.country : ''
       },
       zipCode: {
         elementType: 'input',
@@ -51,7 +51,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Zip Code'
         },
-        value: ''
+        value: this.props.contactData ? this.props.contactData.zipCode : ''
       },
       deliveryMethod: {
         elementType: 'select',
@@ -61,7 +61,7 @@ class ContactData extends Component {
             {value: 'Cash', displayValue: 'Cash'},
           ]
         },
-        value: 'COD'
+        value: this.props.contactData ? this.props.contactData.email : 'COD'
       }
     }
   }
@@ -112,7 +112,7 @@ class ContactData extends Component {
             value={formElement.config.value}
             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
         ))}
-        <Button btnType="Success">ORDER</Button>
+        {this.props.contactData ? <Button btnType="Success">UPDATE</Button> : <Button btnType="Success">ORDER</Button> }
       </form>
     );
 
@@ -133,7 +133,8 @@ const mapStateToProps = state => {
   return {
     ings: state.globalIngredients.ingredients,
     price: state.price.totalPrice,
-    loading: state.orders.loading
+    loading: state.orders.loading,
+    contactData: state.order.order.orderData
   }
 }
 

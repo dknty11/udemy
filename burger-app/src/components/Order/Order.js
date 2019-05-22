@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './Order.css'
+import Button from '../UI/Button/Button'
 
 const order = (props) => {
   const ingredients = []
@@ -26,7 +27,11 @@ const order = (props) => {
   return (
     <div className="Order">
       <p>Ingredients: {ingredientOutput}</p>
-      <p>Price: <strong>{props.price.toFixed(2)}</strong></p>
+      <p>
+        Price: <strong>$USD {props.price.toFixed(2)}</strong>
+        <Button clicked={props.onClickEditOrder} btnType="Success">Edit</Button>
+        <Button clicked={props.onClickDeleteOrder} btnType="Danger">Delete</Button>
+      </p>
     </div>
   )
 };

@@ -9,13 +9,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ingredientReducer from './store/reducer/burgerBuilder';
-import ordersReducer from './store/reducer/order'
-import priceReducer from './store/reducer/price'
+import ordersReducer from './store/reducer/order';
+import priceReducer from './store/reducer/price';
+import orderDetailReducer from './store/reducer/orderDetail';
 
 const rootReducer = combineReducers({
   globalIngredients: ingredientReducer,
   price: priceReducer,
-  orders: ordersReducer
+  orders: ordersReducer,
+  order: orderDetailReducer
 })
 
 const logger = store => {

@@ -1,5 +1,4 @@
 import * as actionTypes from '../actions/actionTypes'
-import { statement } from '@babel/template';
 import { updateObject } from '../utility'
 
 const initialState = {
