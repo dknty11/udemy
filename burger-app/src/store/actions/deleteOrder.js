@@ -1,10 +1,10 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
-export const deleteOrder = (order_id) => {
+export const deleteOrder = (order_id, token) => {
   return dispatch => {
     dispatch(deleteOrderStart())
-    axios.delete('/orders/' + order_id + '.json').then(() => {
+    axios.delete('/orders/' + order_id + '.json?auth=' + token).then(() => {
       dispatch(deleteOrderSuccess(order_id))
     }).catch(err => {
       dispatch(deleteOrderFail(err))

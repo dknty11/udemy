@@ -9,16 +9,16 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.onFetchOrders()
+    this.props.onFetchOrders(this.props.token)
   }
 
   onFetchOrderHandler = (order_id) => {
-    this.props.onFetchSingleOrder(order_id)
+    this.props.onFetchSingleOrder(order_id, this.props.token)
     this.props.history.push("/orders/detail/" + order_id)
   }
 
   onDeleteOrderHandler = (order_id) => {
-    this.props.onDeleteOrder(order_id)
+    this.props.onDeleteOrder(order_id, this.props.token)
   }
 
   render() {
@@ -51,15 +51,16 @@ class Orders extends Component {
 const mapStateToProps = state => {
   return {
     orders: state.orders.orders,
-    loading: state.orders.loading
+    loading: state.orders.loading,
+    token: state.auth.token
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchOrders: () => dispatch(actions.fetchOrders()),
-    onFetchSingleOrder: (order_id) => dispatch(actions.fetchSingleOrder(order_id)),
-    onDeleteOrder: (order_id) => dispatch(actions.deleteOrder(order_id)) 
+    onFetchOrders: (token) => dispatch(actions.fetchOrders(token)),
+    onFetchSingleOrder: (order_id, token) => dispatch(actions.fetchSingleOrder(order_id, token)),
+    onDeleteOrder: (order_id, token) => dispatch(actions.deleteOrder(order_id, token)) 
   }
 }
 

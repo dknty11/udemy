@@ -1,10 +1,10 @@
 import * as actionTypes from './actionTypes'
 import axios from '../../axios-orders';
 
-export const fetchSingleOrder = (order_id) => {
+export const fetchSingleOrder = (order_id, token) => {
   return dispatch => {
     dispatch(fetchSingleOrderStart())
-    axios.get('/orders/' + order_id + '.json').then(res => {
+    axios.get('/orders/' + order_id + '.json?auth=' + token).then(res => {
       dispatch(fetchSingleOrderSuccess(res.data))
     }).catch(err => {
       dispatch(fetchSingleOrderFail(err))

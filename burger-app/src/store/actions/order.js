@@ -1,10 +1,10 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
   return dispatch => {
     dispatch(purchaseBurgerStart());
-    axios.post('/orders.json', orderData).then((res) => {
+    axios.post('/orders.json?auth=' + token, orderData).then((res) => {
       console.log(res.data)
       dispatch(purchaseBurgerSuccess(res.data.name, orderData))
     }).catch((err) => {
@@ -42,10 +42,10 @@ export const purchaseBurgerStart = () => {
   }
 }
 
-export const fetchOrders = (orders) => {
+export const fetchOrders = (token) => {
   return dispatch => {
     dispatch(fetchOrderStart())
-    axios.get('/orders.json')
+    axios.get('/orders.json?auth=' + token)
       .then(res => {
         const fetchedOrders = [];
         for (let key in res.data) {

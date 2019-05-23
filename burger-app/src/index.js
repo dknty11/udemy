@@ -12,12 +12,14 @@ import ingredientReducer from './store/reducer/burgerBuilder';
 import ordersReducer from './store/reducer/order';
 import priceReducer from './store/reducer/price';
 import orderDetailReducer from './store/reducer/orderDetail';
+import authReducer from './store/reducer/auth'
 
 const rootReducer = combineReducers({
   globalIngredients: ingredientReducer,
   price: priceReducer,
   orders: ordersReducer,
-  order: orderDetailReducer
+  order: orderDetailReducer,
+  auth: authReducer
 })
 
 const logger = store => {

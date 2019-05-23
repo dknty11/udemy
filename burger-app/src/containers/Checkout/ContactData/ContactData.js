@@ -91,7 +91,7 @@ class ContactData extends Component {
       orderData: formData
     }
     // We always receive this dispatch function from props
-    this.props.onPurchaseBurger(order)
+    this.props.onPurchaseBurger(order, this.props.token)
   }
 
   render () {
@@ -134,13 +134,14 @@ const mapStateToProps = state => {
     ings: state.globalIngredients.ingredients,
     price: state.price.totalPrice,
     loading: state.orders.loading,
-    contactData: state.order.order.orderData
+    contactData: state.order.order.orderData,
+    token: state.auth.token
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPurchaseBurger: (order) => dispatch(actions.purchaseBurger(order))
+    onPurchaseBurger: (order, token) => dispatch(actions.purchaseBurger(order, token))
   }
 }
 

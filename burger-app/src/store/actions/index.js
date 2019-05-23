@@ -20,5 +20,6 @@ export {
   deleteOrder
 } from './deleteOrder';
 export {
-  auth
+  auth,
+  logout
 } from './auth'
