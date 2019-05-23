@@ -19,3 +19,6 @@ export {
 export {
   deleteOrder
 } from './deleteOrder';
+export {
+  auth
+} from './auth'

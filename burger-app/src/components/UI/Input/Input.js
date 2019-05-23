@@ -7,7 +7,7 @@ const input = (props) => {
   switch (props.elementType) {
     case ('input'):
       inputElement = <input
-        className="InputElement"
+        className={props.invalid && props.touched ? "InputElement Invalid" : "InputElement"}
         {...props.elementConfig}
         value={props.value}
         onChange={props.changed} />;
