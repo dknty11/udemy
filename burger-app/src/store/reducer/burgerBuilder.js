@@ -3,7 +3,8 @@ import { updateObject } from '../utility'
 
 const initialState = {
   ingredients: null,
-  error: false
+  error: false,
+  building: false
 }
 
 const addIngredient = (state, action) => {
@@ -11,7 +12,10 @@ const addIngredient = (state, action) => {
     [action.ingredientName]: state.ingredients[action.ingredientName] + 1
   }
   const updatedAddedIngredients = updateObject(state.ingredients, updatedAddedIngredient)
-  const updatedAddedState = { ingredients: updatedAddedIngredients }
+  const updatedAddedState = {
+    ingredients: updatedAddedIngredients,
+    building: true
+  }
   return updateObject(state, updatedAddedState)
 }
 
@@ -20,12 +24,18 @@ const removeIngredient = (state, action) => {
     [action.ingredientName]: state.ingredients[action.ingredientName] - 1
   }
   const updatedRemovedIngredients = updateObject(state.ingredients, updatedRemovedIngredient)
-  const updatedRemovedState = { ingredients: updatedRemovedIngredients }
+  const updatedRemovedState = {
+    ingredients: updatedRemovedIngredients,
+    building: true
+  }
   return updateObject(state, updatedRemovedState)
 }
 
 const setIngredient = (state, action) => {
-  return updateObject(state, { ingredients: action.ingredients })
+  return updateObject(state, {
+    ingredients: action.ingredients,
+    building: false
+  })
 }
 
 const fetchIngredientError = (state, action) => {

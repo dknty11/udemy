@@ -9,11 +9,16 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.onFetchOrders(this.props.token)
+    const localToken = localStorage.getItem('token')
+    if (localToken) {
+      this.props.onFetchOrders(localToken, this.props.userId)
+    } else {
+      this.props.onFetchOrders(this.props.token, this.props.userId)
+    }
   }
 
-  onFetchOrderHandler = (order_id) => {
-    this.props.onFetchSingleOrder(order_id, this.props.token)
+  onClickEditHandler = (order_id) => {
+    // this.props.onFetchSingleOrder(order_id, this.props.token)
     this.props.history.push("/orders/detail/" + order_id)
   }
 
@@ -22,24 +27,23 @@ class Orders extends Component {
   }
 
   render() {
-    let order = (
-      this.props.orders.map((order) => (
-        <div>
-          <Order
-            key={order.id}
-            ingredients={order.ingredients}
-            price={+order.price}
-            onClickEditOrder={() => this.onFetchOrderHandler(order.id)}
-            onClickDeleteOrder={() => this.onDeleteOrderHandler(order.id)} />
-        </div>
-      ))
-    )
-    if (this.props.orders.length === 0) {
-      order = <p style={{textAlign: 'center'}}>You have no order available!</p>
-    }
+    let order = <p style={{textAlign: 'center'}}>You have no order available!</p>;
+
     if (this.props.loading) {
       order = <Spinner />
     }
+
+    if (this.props.token && this.props.orders.length !== 0) {
+      order = this.props.orders.map(order => (
+        <Order
+          key={order.id}
+          ingredients={order.ingredients}
+          price={+order.price}
+          onClickEditOrder={() => this.onClickEditHandler(order.id)}
+          onClickDeleteOrder={() => this.onDeleteOrderHandler(order.id)} />
+      ))
+    }
+
     return (
       <div>
         {order}
@@ -52,14 +56,14 @@ const mapStateToProps = state => {
   return {
     orders: state.orders.orders,
     loading: state.orders.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchOrders: (token) => dispatch(actions.fetchOrders(token)),
-    onFetchSingleOrder: (order_id, token) => dispatch(actions.fetchSingleOrder(order_id, token)),
+    onFetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId)),
     onDeleteOrder: (order_id, token) => dispatch(actions.deleteOrder(order_id, token)) 
   }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 
 import Burger from '../../../components/Burger/Burger'
@@ -7,39 +6,40 @@ import Spinner from '../../../components/UI/Spinner/Spinner'
 import ContactData from '../../Checkout/ContactData/ContactData'
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
 import axios from '../../../axios-orders'
+import * as actions from '../../../store/actions/index'
 
 class OrderDetail extends Component {
+  componentDidMount() {
+    this.props.onFetchSingleOrder(this.props.match.params.id, this.props.token)
+  }
   render() {
-    let orderRedirect = null
     let orderDetail = <Spinner />;
     if (!this.props.loading) {
-      if (!this.props.ings) {
-        orderDetail = null;
-        orderRedirect = <Redirect to="/orders" />
-      } else {
-        orderDetail = (
-          <div>
-            <Burger ingredients={this.props.ings} />
-            <ContactData />
-          </div>
+      orderDetail = (
+          <Burger ingredients={this.props.ings} />
         );
-      }
     }
     return (
       <div>
-        {orderRedirect}
         {orderDetail}
+        <ContactData />
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
     ings: state.order.order.ingredients,
-    price: state.order.order.price,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token
   }
 }
 
-export default connect(mapStateToProps)(withErrorHandler(OrderDetail, axios));
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchSingleOrder: (order_id, token) => dispatch(actions.fetchSingleOrder(order_id, token))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(OrderDetail, axios));

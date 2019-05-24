@@ -21,5 +21,7 @@ export {
 } from './deleteOrder';
 export {
   auth,
-  logout
+  logout,
+  setAuthRedirectPath,
+  authCheckState
 } from './auth'

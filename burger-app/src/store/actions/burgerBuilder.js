@@ -46,7 +46,6 @@ export const fetchIngredientsError = () => {
 }
 
 export const fetchIngredient = () => {
-  console.log('fetching')
   return dispatch => {
     axios.get('/ingredients.json')
       .then(res => {
@@ -54,7 +53,6 @@ export const fetchIngredient = () => {
         dispatch(actions.setTotalPrice(res.data))
       })
       .catch(err => {
-        console.log(err)
         dispatch(fetchIngredientsError())
     })
   }
